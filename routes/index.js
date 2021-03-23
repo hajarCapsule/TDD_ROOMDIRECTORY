@@ -16,7 +16,7 @@ var router = express.Router();
   if (!email || !nom || !chambre) {
       res.json({ result: false });
   } else {
-      res.json({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13},tempsAttente:10})
+      res.json({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13}})
   } ;})
 
 /* 
@@ -30,10 +30,10 @@ router.post('/sign-in' ,async function(req, res, next) {
   var chambre = req.body.chambre;
 
   
-  if (!email || !nom || !chambre) {
+  if (email != 'hajar@hajar.com' || nom !='Hajar' || chambre != '13') {
       res.json({ result: false });
   } else {
-      res.json({result:true,  saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13},tempsAttente:10})
+      res.json({result:true,  saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13}})
   } ;})
 
 /* 
@@ -47,7 +47,7 @@ router.post('/sign-in' ,async function(req, res, next) {
     if (!evenementId) {
       res.json({ result: false });
   } else {
-      res.json({result:true,event:{nom:"Pause goûter de l'après-midi",date:"15/03/2020"},tempsAttente:10})
+      res.json({result:true,event:{nom:"Pause goûter de l'après-midi",date:"15/03/2020"}})
   } ;})
 
 
@@ -64,21 +64,21 @@ router.post('/sign-in' ,async function(req, res, next) {
   if (!userId || !eventId || !isComing) {
     res.json({ result: false });
 } else {
-    res.json({result:true,tempsAttente:10})
+    res.json({result:true})
 } ;})
 
   /* 
-  Affichage détail des recommandations
-  Params : type(restauration)
-  Response : result(true),recommandation({nom:'Berthillon',adresse:'31 rue saint louis en l'ile, 75004 Paris',telephone:'+33 (0)1 43 54 23 31'})
+  Affichage du récap des commandes et événement de l'utilisateur
+  Body : userId(id1234)
+  Response : result(true),events('mes événements'),orders('mes commandes')
   */
- router.get('/recommandations/:type', async function (req, res, next){
-  const type = req.params.type
+ router.post('/account', async function (req, res, next){
+  const userId = req.body.userId
 
-  if (!type) {
-    res.json({ result: false });
+  if (userId === 'id1234') {
+    res.json({result:true,events:'mes événements',orders:'mes commandes'})
 } else {
-    res.json({result:true,recommandation:{nom:'Berthillon',adresse:"31 rue saint louis en l'ile, 75004 Paris",telephone:'+33 (0)1 43 54 23 31'},tempsAttente:10 })
+    res.json({result:false})
 } ;})
 
 module.exports = router;

@@ -5,7 +5,7 @@ test("Création d'un utilisateur - Body correct", async (done) => {
  await request(app).post('/sign-up')
    .send({email:'hajar@hajar.com',nom:'Hajar',chambre:13})
    .expect(200)
-   .expect({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13},tempsAttente:10 });
+   .expect({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13}});
  done();
 });
 
@@ -21,7 +21,7 @@ test("Création d'un utilisateur - Body incomplet", async (done) => {
   await request(app).post('/sign-in')
     .send({email:'hajar@hajar.com',nom:'Hajar',chambre:13})
     .expect(200)
-    .expect({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13},tempsAttente:10 });
+    .expect({result:true, saveUser:{token:1234,email:'hajar@hajar.com',nom:'Hajar',chambre:13}});
   done();
  });
  
@@ -36,7 +36,7 @@ test("Création d'un utilisateur - Body incomplet", async (done) => {
   test("Récupération d'un événement - Params correct", async (done) => {
     await request(app).get('/events/event1234')
       .expect(200)
-      .expect({result:true, event:{nom:"Pause goûter de l'après-midi",date:"15/03/2020"},tempsAttente:10});
+      .expect({result:true, event:{nom:"Pause goûter de l'après-midi",date:"15/03/2020"}});
     done();
   });
 
@@ -49,10 +49,11 @@ test("Création d'un utilisateur - Body incomplet", async (done) => {
     done();
    });
 
-   test("Affichage détail des recommandations - Params correct", async (done) => {
-    await request(app).get('/recommandations/restauration')
+   test("Récapitulatif de l'utilisateur - Body correct", async (done) => {
+    await request(app).post('/account')
+      .send({userId:'id1234'})
       .expect(200)
-      .expect({ result:true,recommandation:{nom:'Berthillon',adresse:"31 rue saint louis en l'ile, 75004 Paris",telephone:'+33 (0)1 43 54 23 31'},tempsAttente:10 });
+      .expect({ result:true,events:'mes événements',orders:'mes commandes' });
     done();
   });
 
